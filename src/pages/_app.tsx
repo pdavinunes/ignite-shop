@@ -1,9 +1,10 @@
-import { CartButton } from '@/components/CartButton'
 import { globalStyles } from '@/styles/global'
 import { Container, Header } from '@/styles/pages/app'
 import type { AppProps } from 'next/app'
 import Image from 'next/image'
 import { CartProvider } from 'use-shopping-cart'
+
+import { CartButton } from '@/components/CartButton'
 
 import logoImg from '../assets/logo.svg'
 
