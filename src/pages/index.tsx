@@ -6,8 +6,14 @@ import Link from "next/link";
 import Stripe from "stripe";
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
+import { CaretLeft, CaretRight, Handbag } from "phosphor-react";
 
-import { HomeContainer, Product } from "@/styles/pages/home";
+import {
+  ArrowButton,
+  FooterDetails,
+  HomeContainer,
+  Product,
+} from "@/styles/pages/home";
 import { stripe } from "@/lib/stripe";
 
 interface HomeProps {
@@ -20,12 +26,24 @@ interface HomeProps {
 }
 
 export default function Home({ products }: HomeProps) {
-  const [sliderRef] = useKeenSlider({
+  const [sliderRef, instanceRef] = useKeenSlider({
     slides: {
-      perView: 3,
+      perView: 2,
       spacing: 48,
     },
   });
+
+  const handleNext = () => {
+    if (instanceRef.current) {
+      instanceRef.current.next();
+    }
+  };
+
+  const handlePrev = () => {
+    if (instanceRef.current) {
+      instanceRef.current?.prev();
+    }
+  };
 
   return (
     <>
@@ -33,23 +51,34 @@ export default function Home({ products }: HomeProps) {
         <title>Home | Ignite Shop</title>
       </Head>
       <HomeContainer ref={sliderRef} className="keen-slider">
+        <ArrowButton direction={"left"} >
+          <CaretLeft onClick={handlePrev} size={40} weight="bold" />
+        </ArrowButton>
         {products.map((product) => {
           return (
             <Link
-              href={`/product/${product.id}`} 
-              key={product.id} 
+              href={`/product/${product.id}`}
+              key={product.id}
               prefetch={false}
             >
               <Product className="keen-slider__slide">
                 <Image src={product.imageUrl} width={520} height={480} alt="" />
                 <footer>
-                  <strong>{product.name}</strong>
-                  <span>{product.price}</span>
+                  <FooterDetails>
+                    <strong>{product.name}</strong>
+                    <span>{product.price}</span>
+                  </FooterDetails>
+                  <button>
+                    <Handbag size={32} />
+                  </button>
                 </footer>
               </Product>
             </Link>
           );
         })}
+        <ArrowButton direction={"right"}>
+          <CaretRight onClick={handleNext} size={40} weight="bold" />
+        </ArrowButton>
       </HomeContainer>
     </>
   );
@@ -66,9 +95,9 @@ export const getStaticProps: GetStaticProps = async () => {
       id: product.id,
       name: product.name,
       imageUrl: product.images[0],
-      price: new Intl.NumberFormat('pt-BR', {
-        style: 'currency',
-        currency: 'BRL'
+      price: new Intl.NumberFormat("pt-BR", {
+        style: "currency",
+        currency: "BRL",
       }).format(price.unit_amount! / 100),
     };
   });

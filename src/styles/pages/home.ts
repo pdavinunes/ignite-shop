@@ -2,6 +2,9 @@ import { styled } from "..";
 
 export const HomeContainer = styled('main', {
   display: "flex",
+  justifyContent: 'space-between',
+  position: 'relative',
+  zIndex: 1,
   width: '100%',
   maxWidth: 'calc(100vw - ((100vw - 1180px) / 2))',
   marginLeft: 'auto',
@@ -13,6 +16,7 @@ export const Product = styled('div', {
   borderRadius: 8,
   cursor: 'pointer',
   position: 'relative',
+  zIndex: 1,
 
   display: "flex",
   alignItems: 'center',
@@ -43,17 +47,19 @@ export const Product = styled('div', {
     opacity: 0,
     transition: 'all 0.2s ease-in-out',
 
-    strong: {
-      fontSize: '$lg',
-      color: '$gray100'
-    },
+    button: {
+      padding: '0.75rem',
+      backgroundColor: '$green500',
+      color: '$white',
+      border: 'none',
+      borderRadius: 6,
+      marginLeft: '0.2rem',
+      cursor: 'pointer',
 
-    span: {
-      fontSize: '$xl',
-      fontWeight: 'bold',
-      color: '$green300'
+      '&:hover': {
+        backgroundColor: '$green300',
+      }
     }
-
   },
 
   '&:hover': {
@@ -63,3 +69,48 @@ export const Product = styled('div', {
     }
   }
 })
+
+export const FooterDetails = styled('div', {
+  display: "flex",
+  flexDirection: "column",
+
+  strong: {
+    fontSize: '$lg',
+    color: '$gray100',
+    fontWeight: 'bold'
+  },
+
+  span: {
+    fontSize: '$xl',
+    fontWeight: 'bold',
+    color: '$green300'
+  }
+})
+
+export const ArrowButton = styled("button", {
+  position: "absolute",
+  top: "50%",
+  transform: "translateY(-50%)",
+  width: "5rem",
+  height: "100%",
+  cursor: "pointer",
+  border: "none",
+  color: "$white",
+  padding: "0 1rem",
+  zIndex: 100,
+
+  variants: {
+      direction: {
+          left: {
+              left: 0,
+              textAlign: "left",
+              background: "linear-gradient(90deg, rgba(18, 18, 20, 0.75) 0%, rgba(18, 18, 20, 0) 100%)",
+          },
+          right: {
+              right: 0,
+              textAlign: "right",
+              background: "linear-gradient(90deg, rgba(18, 18, 20, 0) 0%, rgba(18, 18, 20, 0.75) 100%)",
+          },
+      },
+  },
+});
